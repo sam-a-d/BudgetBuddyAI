@@ -52,5 +52,5 @@ A full-stack web application for tracking personal finances, powered by **Spring
 ### Steps
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-username/personal-budget-tracker.git
-   cd personal-budget-tracker
+   git clone https://github.com/sam-a-d/BuggetBuddyAI
+   cd BuggetBuddyAI
