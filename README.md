@@ -19,21 +19,21 @@ A full-stack web application for tracking personal finances, powered by **Spring
 ## Tech Stack
 
 ### Backend (Spring Boot)
-- **Java 17**
+- **Java 23**
 - **Spring Boot 3**
 - **Spring Security** (JWT Authentication)
 - **PostgreSQL** (Database)
 - **Docker**
 
 ### AI/ML Microservice (Django)
-- **Python 3.9**
+- **Python 3.10**
 - **Django REST Framework**
 - **OpenAI API** / **Hugging Face Transformers**
 - **Prophet** (Time-Series Forecasting)
 - **Pandas** (Data Analysis)
 
 ### Frontend (React)
-- **React 18**
+- **React 19**
 - **Axios** (API Calls)
 - **Chart.js** (Data Visualization)
 - **React Router** (Navigation)
