@@ -10,5 +10,5 @@ import lombok.ToString;
 public class UserDTO {
     private String username;
     private String password;
-    private String role; // Expected: "ROLE_ADMIN" or "ROLE_USER"
+    private String[] role; // Expected: "ROLE_ADMIN" or "ROLE_USER"
 }

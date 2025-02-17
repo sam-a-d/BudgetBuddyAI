@@ -30,25 +30,32 @@ public class UserService {
 
     public String addNewUser(UserDTO userDTO){
 
-        try{
-//            Role userRole = roleRepo.findByName(ERole.valueOf(userDTO.getRole().toUpperCase()));
+        Set<Role> roleSet = new HashSet<>();
 
-            Role userRole = roleRepo.findByName(ERole.valueOf(userDTO.getRole().toUpperCase()))
-                    .orElseThrow(() -> new RuntimeException("Role not found: " + userDTO.getRole()));
-            Set<Role> roleSet = new HashSet<>();
+        for (String theRole : userDTO.getRole()) {
+            try{
+                Role userRole = roleRepo.findByName(ERole.valueOf(theRole.toUpperCase()))
+                                .orElseThrow(() -> new RuntimeException("Role not found: " + theRole));
 
-            roleSet.add(userRole);
+                roleSet.add(userRole);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
+        if (roleSet.isEmpty()){
+            return "The rule(s) are not found";
+        }else{
             User userToRegister = new User();
             userToRegister.setUsername(userDTO.getUsername());
             userToRegister.setPassword(userDTO.getPassword());
             userToRegister.setRoles(roleSet);
-
             userRepo.save(userToRegister);
 
-            return "Added User: " + roleSet;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            return "Added User: " + userToRegister;
         }
+
     }
 
 }
