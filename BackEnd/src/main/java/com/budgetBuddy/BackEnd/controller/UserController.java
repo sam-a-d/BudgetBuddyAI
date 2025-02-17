@@ -5,6 +5,7 @@ import com.budgetBuddy.BackEnd.model.User;
 import com.budgetBuddy.BackEnd.repository.RoleRepo;
 import com.budgetBuddy.BackEnd.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.web.SecurityMarker;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping("/user/add")
-    public String addNewUser(@RequestBody UserDTO userDTO){
+    public ResponseEntity<?> addNewUser(@RequestBody UserDTO userDTO){
         return userService.addNewUser(userDTO);
     }
 

@@ -8,6 +8,8 @@ import com.budgetBuddy.BackEnd.model.User;
 import com.budgetBuddy.BackEnd.repository.RoleRepo;
 import com.budgetBuddy.BackEnd.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -28,32 +30,40 @@ public class UserService {
         return userRepo.findAll();
     }
 
-    public String addNewUser(UserDTO userDTO){
+    public ResponseEntity<?> addNewUser(UserDTO userDTO){
 
         Set<Role> roleSet = new HashSet<>();
 
         for (String theRole : userDTO.getRole()) {
             try{
                 Role userRole = roleRepo.findByName(ERole.valueOf(theRole.toUpperCase()))
-                                .orElseThrow(() -> new RuntimeException("Role not found: " + theRole));
+                                .orElseThrow(() -> new RuntimeException("Role is a valid enum but not initiated in DB: " + theRole));
 
                 roleSet.add(userRole);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
 
+            } catch (IllegalArgumentException e) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error adding the role: " + theRole + "Probably the role doesn't exists ");
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The role is a valid one but does not have a database entry");
+            }
         }
 
         if (roleSet.isEmpty()){
-            return "The rule(s) are not found";
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Role(s) not found");
         }else{
             User userToRegister = new User();
             userToRegister.setUsername(userDTO.getUsername());
             userToRegister.setPassword(userDTO.getPassword());
             userToRegister.setRoles(roleSet);
-            userRepo.save(userToRegister);
 
-            return "Added User: " + userToRegister;
+            try{
+                userRepo.save(userToRegister);
+                return ResponseEntity.status(HttpStatus.CREATED).body("New user Created");
+
+            }catch (Exception e){
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error. Message --> "+ e.getMessage());
+            }
+
         }
 
     }
