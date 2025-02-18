@@ -2,7 +2,7 @@ package com.budgetBuddy.BackEnd.service;
 
 
 import com.budgetBuddy.BackEnd.dto.UserDTO;
-import com.budgetBuddy.BackEnd.model.ERole;
+import com.budgetBuddy.BackEnd.Enumerators.ERole;
 import com.budgetBuddy.BackEnd.model.Role;
 import com.budgetBuddy.BackEnd.model.User;
 import com.budgetBuddy.BackEnd.repository.RoleRepo;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
