@@ -26,10 +26,13 @@ public class Transaction {
     private LocalDateTime transactionTime;
     private String description;
 
-    @ElementCollection
-    @CollectionTable(name = "transaction_categories", joinColumns = @JoinColumn(name = "transaction_id"))
-    @Column(name = "category")
-    private Set<String> category = new HashSet<>();
+    @ManyToMany
+    @JoinTable(
+            name = "transaction_categories",
+            joinColumns = @JoinColumn(name = "transaction_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private Set<Category> categories = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
