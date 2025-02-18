@@ -1,4 +1,4 @@
-package com.budgetBuddy.BackEnd.model;
+package com.budgetBuddy.BackEnd.Enumerators;
 
 
 public enum ERole{
