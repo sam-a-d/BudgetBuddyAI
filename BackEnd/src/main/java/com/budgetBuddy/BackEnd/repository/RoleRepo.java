@@ -1,6 +1,6 @@
 package com.budgetBuddy.BackEnd.repository;
 
-import com.budgetBuddy.BackEnd.model.ERole;
+import com.budgetBuddy.BackEnd.Enumerators.ERole;
 import com.budgetBuddy.BackEnd.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

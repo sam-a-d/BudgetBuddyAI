@@ -1,10 +1,9 @@
 package com.budgetBuddy.BackEnd.model;
 
+import com.budgetBuddy.BackEnd.Enumerators.ERole;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Entity
 @Component
