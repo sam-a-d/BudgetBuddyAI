@@ -15,7 +15,7 @@ class SingleTransactionCell extends Component {
                           {this.props.type == "Credit" ? (
                             <span className="ms-2 align-top avtar avtar-xxs bg-light-success">+</span>
                           ) : (
-                            <span className="ms-2 align-top avtar avtar-xxs bg-light-danger"><i className="ti  text-danger"> - </i></span>
+                            <span className="ms-2 align-top avtar avtar-xxs bg-light-danger">-</span>
                           )}
                         </h6>
                       </div>
