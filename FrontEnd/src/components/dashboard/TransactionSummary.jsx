@@ -1,31 +1,9 @@
 import React, { Component } from 'react';
 import SingleTransactionCell from './SingleTransactionCell';
-import axios from 'axios';
 
 class TransactionSummary extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            transactions : [],
-            dataIsLoaded : false
-        }
-    }
 
-    componentDidMount(){
-        axios.get("http://localhost:8080/transactions")
-        .then((res) => {
-            this.setState({
-                transactions: res.data,
-                dataIsLoaded: true
-            })
-
-        })
-    }
     render() {
-        const {transactions, dataIsLoaded} = this.state;
-        if(!dataIsLoaded){
-            return <strong> Loading...</strong>
-        }else{
             return (
                 <div className="card">
                 <div className="card-body">
@@ -37,7 +15,7 @@ class TransactionSummary extends Component {
                     </div>
 
                     <ul className="list-group list-group-flush">
-                        {transactions.map((transaction)=>(
+                        {this.props.transactions.map((transaction)=>(
                             <li key={transaction.id} className="list-group-item px-0">
                                 <SingleTransactionCell 
                                     description={transaction.description} 
@@ -57,7 +35,6 @@ class TransactionSummary extends Component {
                 </div>
                 </div>
             );
-        }
     }
 }
 
