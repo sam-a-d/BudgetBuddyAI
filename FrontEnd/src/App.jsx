@@ -5,6 +5,7 @@ import axios from "axios";
 import TableData from './components/table/TableData';
 import MainLayout from './layouts/MainLayout';
 import Transactions from './components/dashboard/Transactions';
+import All from './components/dashboard/DashboardHome';
 
 // const App = () => {
 //   const [count, setCount] = useState(0);
@@ -23,7 +24,7 @@ class App extends React.Component{
   render(){
     return(
       <MainLayout>
-        <Transactions/>
+        <All />
       </MainLayout>
     )
   }
