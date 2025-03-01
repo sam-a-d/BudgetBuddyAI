@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
@@ -133,6 +135,22 @@ public class TransactionService {
                         "Error with transaction type"
                 );
             }
+        }
+
+        if(startDate != null && !startDate.isEmpty()){
+            predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("transactionTime"), LocalDate.parse(startDate)));
+        }
+
+        if(endDate != null && !endDate.isEmpty()){
+            predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("transactionTime"), LocalDate.parse(endDate)));
+        }
+
+        if(minAmount != null){
+            predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("amount"), minAmount));
+        }
+
+        if(maxAmount != null){
+            predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("amount"), maxAmount));
         }
 
         criteriaQuery.where(predicates.toArray(new Predicate[0]));
