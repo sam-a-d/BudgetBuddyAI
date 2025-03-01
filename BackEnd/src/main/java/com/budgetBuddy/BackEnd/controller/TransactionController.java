@@ -21,9 +21,31 @@ public class TransactionController {
         return transactionService.addTransaction(transactionDTO);
     }
 
-    @GetMapping("/transactions")
+    @GetMapping("/alltransactions")
     public List<Transaction> getTransactions(){
         return transactionService.getAllTransaction();
     }
 
+    @GetMapping("/transactions")
+    public ResponseEntity<?> getFilteredTransactions(
+            @RequestParam(required = false) Long userId,
+            @RequestParam(required = false) String type,
+            @RequestParam(required = false) String startDate,
+            @RequestParam(required = false) String endDate,
+            @RequestParam(required = false) Double minAmount,
+            @RequestParam(required = false) Double maxAmount
+
+
+    ){
+        ResponseEntity<?> transactions = transactionService
+                                            .getTransactionWithFilter(
+                                                    startDate,
+                                                    endDate,
+                                                    type,
+                                                    userId,
+                                                    minAmount,
+                                                    maxAmount
+                                            );
+        return transactions;
+    }
 }
