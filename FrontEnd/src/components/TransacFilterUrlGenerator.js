@@ -3,7 +3,7 @@ export const TransacFilterUrlGenerator = ({
   userId = null,
   startDate = null,
   endDate = null,
-  transactionType = null,
+  type = null,
   minAmount = null,
   maxAmount = null
 }) => {
@@ -14,8 +14,8 @@ export const TransacFilterUrlGenerator = ({
     params.append("userId", userId);
   }
 
-  if (transactionType != null) {
-    params.append("transactionType", transactionType);
+  if (type != null) {
+    params.append("type", type);
   }
 
   if (minAmount != null) {
