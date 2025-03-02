@@ -3,27 +3,57 @@ import Card from '../Card';
 import CardSmall from '../CardSmall';
 import TransactionSummary from './TransactionSummary';
 import axios from 'axios';
+import TransactionFilter from './TransactionFilter';
+import { TransacFilterUrlGenerator } from '../TransacFilterUrlGenerator';
 
 class DashboardHome extends Component {
-      constructor(props){
-        super(props);
-        this.state = {
-            transactions : [],
-            dataIsLoaded : false
-        }
+    constructor(props){
+      super(props);
+      this.state = {
+          transactions : [],
+          type : null,
+          dataIsLoaded : false
+      }
     }
 
-    componentDidMount(){
-        axios.get("http://localhost:8080/transactions")
-        .then((res) => {
-            this.setState({
-                transactions: res.data,
-                dataIsLoaded: true
-            })
-
+    
+    fetchTransactions = () => {
+      console.log("Fetching transactions");
+      
+      const baseUrl = TransacFilterUrlGenerator({
+        url: "http://localhost:8080/transactions",
+        userId: 1,
+        type: this.state.selectedType === "all" ? null : this.state.selectedType
+      });
+      
+      console.log(baseUrl);
+      
+      
+      axios.get(baseUrl)
+      .then((res) => {
+        this.setState({
+          transactions: res.data,
+          dataIsLoaded: true
         })
+        
+      })
     }
-
+    
+    
+    componentDidMount(){
+      this.fetchTransactions();
+    }
+    
+    handleTypeChange = (event) => {
+      this.setState({ 
+        selectedType: event.target.value
+      }, () => {
+        this.fetchTransactions();
+        console.log(this.state.selectedType);
+        
+      });
+    };
+    
     render() {
         
       const {transactions, dataIsLoaded} = this.state;
@@ -32,12 +62,20 @@ class DashboardHome extends Component {
         return <strong> Loading...</strong>
       }else{
 
-          const totalDebit = transactions.filter((t) => t.transactionType == "TRANS_INCOME").reduce((acc, t) => acc + t.amount, 0);
-          const totalCredit = transactions.filter((t) => t.transactionType == "TRANS_EXPENSE").reduce((acc, t) => acc + t.amount, 0);
+          const totalCredit = transactions.filter((t) => t.transactionType == "TRANS_INCOME").reduce((acc, t) => acc + t.amount, 0);
+          const totalDebit = transactions.filter((t) => t.transactionType == "TRANS_EXPENSE").reduce((acc, t) => acc + t.amount, 0);
           console.log(totalDebit);
           console.log(totalCredit);
         return (
+            
             <div className="row">
+
+              <select className="form-select" value={this.state.selectedType} onChange={this.handleTypeChange}>
+                <option value="all">All Type</option>
+                <option value="TRANS_INCOME">Credit</option>
+                <option value="TRANS_EXPENSE">Debit</option>
+              </select>
+
             <div className="col-xl-4 col-md-6">
                 <Card />
             </div>
@@ -57,13 +95,7 @@ class DashboardHome extends Component {
                     <small className="text-muted">Total Growth</small>
                     <h3>$2,324.00</h3>
                   </div>
-                  <div className="col-auto">
-                    <select className="form-select p-r-35">
-                      <option>Today</option>
-                      <option selected>This Month</option>
-                      <option>This Year</option>
-                    </select>
-                  </div>
+
                 </div>
                 <div id="growthchart"></div>
               </div>
