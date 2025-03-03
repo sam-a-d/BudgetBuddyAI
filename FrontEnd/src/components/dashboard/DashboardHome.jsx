@@ -4,8 +4,9 @@ import CardSmall from '../CardSmall';
 import TransactionSummary from './TransactionSummary';
 import axios from 'axios';
 import TransactionFilter from './TransactionFilter';
-import { TransacFilterUrlGenerator } from '../TransacFilterUrlGenerator';
+import { TransacFilterUrlGenerator } from '../../functions/TransacFilterUrlGenerator';
 import Dropdown from '../microComponents/dropdown';
+import { FilterDurationProcessor } from '../../functions/FilterDurationProcessor';
 
 class DashboardHome extends Component {
     constructor(props){
@@ -15,7 +16,6 @@ class DashboardHome extends Component {
           type : null,
           startDate : null,
           endDate : null,
-          type : null,
           userId : null,
           minAmount : null,
           maxAmount : null,
@@ -29,7 +29,9 @@ class DashboardHome extends Component {
       const baseUrl = TransacFilterUrlGenerator({
         url: "http://localhost:8080/transactions",
         userId: 1,
-        type: this.state.selectedType === "all" ? null : this.state.selectedType
+        type: this.state.selectedType === "all" ? null : this.state.selectedType,
+        startDate: this.state.startDate,
+        endDate: this.state.endDate
       });
       
       console.log(baseUrl);
@@ -60,6 +62,25 @@ class DashboardHome extends Component {
       });
     };
 
+    handleDurationChange = (event) => {
+      const selectedDuration = event.target.value;
+      console.log(selectedDuration);
+
+      const duration = FilterDurationProcessor(selectedDuration);
+      console.log(duration);
+      
+      this.setState({
+        startDate: duration.startDate,
+        endDate: duration.endDate,
+      }, () => {
+        console.log(this.state.startDate);
+        console.log(this.state.endDate);
+        
+        
+        this.fetchTransactions();
+      });
+    }
+
     
     
     render() {
@@ -87,6 +108,21 @@ class DashboardHome extends Component {
                   value={this.state.selectedType}
                   onChange={this.handleTypeChange}
                 />
+
+                <Dropdown
+                  cssClass="col-xl-2 col-md-6"
+                  options={[
+                      { value: null, label: "All Time" },
+                      { value: "today", label: "Today" },
+                      { value: "last7d", label: "Last 7 Days" },
+                      { value: "last1m", label: "Last 1 Month" },
+                      { value: "last6m", label: "Last 6 Months" },
+                      { value: "last12m", label: "Last 12 Months" }
+                  ]}
+                  value={this.state.selectedDuration}
+                  onChange={this.handleDurationChange}
+                />
+
               </div>
             
             <div className="col-xl-4 col-md-6">
