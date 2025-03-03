@@ -26,6 +26,14 @@ export const TransacFilterUrlGenerator = ({
     params.append("maxAmount", maxAmount);
   }
 
+  if (startDate != null) {
+    params.append("startDate", startDate);
+  }
+
+  if (endDate != null) {
+    params.append("endDate", endDate);
+  }
+
 
   baseUrl.search = params.toString();
   return baseUrl.toString();
