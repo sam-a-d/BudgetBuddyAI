@@ -5,6 +5,7 @@ import TransactionSummary from './TransactionSummary';
 import axios from 'axios';
 import TransactionFilter from './TransactionFilter';
 import { TransacFilterUrlGenerator } from '../TransacFilterUrlGenerator';
+import Dropdown from '../microComponents/dropdown';
 
 class DashboardHome extends Component {
     constructor(props){
@@ -12,13 +13,18 @@ class DashboardHome extends Component {
       this.state = {
           transactions : [],
           type : null,
+          startDate : null,
+          endDate : null,
+          type : null,
+          userId : null,
+          minAmount : null,
+          maxAmount : null,
           dataIsLoaded : false
       }
     }
 
     
     fetchTransactions = () => {
-      console.log("Fetching transactions");
       
       const baseUrl = TransacFilterUrlGenerator({
         url: "http://localhost:8080/transactions",
@@ -53,6 +59,8 @@ class DashboardHome extends Component {
         
       });
     };
+
+    
     
     render() {
         
@@ -64,18 +72,23 @@ class DashboardHome extends Component {
 
           const totalCredit = transactions.filter((t) => t.transactionType == "TRANS_INCOME").reduce((acc, t) => acc + t.amount, 0);
           const totalDebit = transactions.filter((t) => t.transactionType == "TRANS_EXPENSE").reduce((acc, t) => acc + t.amount, 0);
-          console.log(totalDebit);
-          console.log(totalCredit);
         return (
             
             <div className="row">
-
-              <select className="form-select" value={this.state.selectedType} onChange={this.handleTypeChange}>
-                <option value="all">All Type</option>
-                <option value="TRANS_INCOME">Credit</option>
-                <option value="TRANS_EXPENSE">Debit</option>
-              </select>
-
+              <div className="row mb-3">
+                <Dropdown
+                  cssClass="col-xl-2 col-md-6"
+                  label="Transaction Type"
+                  options={[
+                      { value: "all", label: "All Type" },
+                      { value: "TRANS_INCOME", label: "Credit" },
+                      { value: "TRANS_EXPENSE", label: "Debit" }
+                  ]}
+                  value={this.state.selectedType}
+                  onChange={this.handleTypeChange}
+                />
+              </div>
+            
             <div className="col-xl-4 col-md-6">
                 <Card />
             </div>
