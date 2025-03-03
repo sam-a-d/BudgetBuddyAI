@@ -63,20 +63,14 @@ class DashboardHome extends Component {
     };
 
     handleDurationChange = (event) => {
+      
       const selectedDuration = event.target.value;
-      console.log(selectedDuration);
-
       const duration = FilterDurationProcessor(selectedDuration);
-      console.log(duration);
       
       this.setState({
         startDate: duration.startDate,
         endDate: duration.endDate,
       }, () => {
-        console.log(this.state.startDate);
-        console.log(this.state.endDate);
-        
-        
         this.fetchTransactions();
       });
     }
