@@ -19,7 +19,7 @@ export const TransacFilterUrlGenerator = ({
   }
 
   if (minAmount != null) {
-    params.append("minAmount","minAmount");
+    params.append("minAmount",minAmount);
   }
 
   if (maxAmount != null) {
