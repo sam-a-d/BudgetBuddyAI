@@ -7,6 +7,7 @@ import { TransacFilterUrlGenerator } from '../../functions/TransacFilterUrlGener
 import Dropdown from '../microComponents/dropdown';
 import { FilterDurationProcessor } from '../../functions/FilterDurationProcessor';
 import Input from '../microComponents/input';
+import StackChart from './StackChart';
 
 class DashboardHome extends Component {
     constructor(props){
@@ -121,7 +122,7 @@ class DashboardHome extends Component {
 
                 <Input
                   cssClass="col-xl-2 col-md-6"
-                  placeholder="Min Amount"
+                  placeholder="Min Transaction"
                   value={this.state.minAmount}
                   type='number'
                   onChange={(e) => this.setState({ minAmount: e.target.value }, () => this.fetchTransactions())}
@@ -129,7 +130,7 @@ class DashboardHome extends Component {
 
                 <Input
                   cssClass="col-xl-2 col-md-6"
-                  placeholder="Max Amount"
+                  placeholder="Max Transaction"
                   value={this.state.maxAmount}
                   type='number'
                   onChange={(e) => this.setState({ maxAmount: e.target.value }, () => this.fetchTransactions())}
@@ -154,12 +155,13 @@ class DashboardHome extends Component {
               <div className="card-body">
                 <div className="row mb-3 align-items-center">
                   <div className="col">
-                    <small className="text-muted">Total Growth</small>
-                    <h3>$2,324.00</h3>
+                    <small className="text-muted">Total Transactions</small>
+                    <h5>{totalCredit + totalDebit}</h5>
                   </div>
 
+                <StackChart transactions={transactions}/>
                 </div>
-                <div id="growthchart"></div>
+              
               </div>
             </div>
           </div>
