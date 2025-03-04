@@ -15,15 +15,19 @@ class TransactionSummary extends Component {
                     </div>
 
                     <ul className="list-group list-group-flush">
-                        {this.props.transactions.map((transaction)=>(
-                            <li key={transaction.id} className="list-group-item px-0">
-                                <SingleTransactionCell 
-                                    description={transaction.description} 
-                                    amount={transaction.amount} 
-                                    time={new Date(transaction.transactionTime).toLocaleString()} 
-                                    type={transaction.transactionType == "TRANS_INCOME" ? "Credit": "Debit"}/>
-                            </li>
-                        ))}
+                        {this.props.transactions
+                            .sort((a, b) => new Date(b.transactionTime) - new Date(a.transactionTime)) // Sort by transactionTime DESC
+                            .slice(0, 5) // Get last 5 transactions
+                            .map((transaction)=>(
+                                <li key={transaction.id} className="list-group-item px-0">
+                                    <SingleTransactionCell 
+                                        description={transaction.description} 
+                                        amount={transaction.amount} 
+                                        time={new Date(transaction.transactionTime).toLocaleString()} 
+                                        type={transaction.transactionType == "TRANS_INCOME" ? "Credit": "Debit"}/>
+                                </li>
+                            ))
+                        }
 
                     </ul>
                     <div className="text-center">
