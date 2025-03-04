@@ -146,8 +146,8 @@ class DashboardHome extends Component {
                 <Card />
           </div>
           <div className="col-xl-4 col-md-12">
-            <CardSmall transType="Credit" amount={totalCredit} cssClass="bg-primary" cardInside="+"/>
-            <CardSmall transType="Debit" amount={totalDebit} cssClass="bg-warning" cardInside="-"/>
+            <CardSmall transType="Credit" amount={totalCredit.toFixed(2)} cssClass="bg-primary" cardInside="+"/>
+            <CardSmall transType="Debit" amount={totalDebit.toFixed(2)} cssClass="bg-warning" cardInside="-"/>
           </div>
 
           <div className="col-xl-8 col-md-12">
@@ -156,7 +156,7 @@ class DashboardHome extends Component {
                 <div className="row mb-3 align-items-center">
                   <div className="col">
                     <small className="text-muted">Total Transactions</small>
-                    <h5>{totalCredit + totalDebit}</h5>
+                    <h5>{(totalCredit+ totalDebit).toFixed(2)}</h5>
                   </div>
 
                 <StackChart transactions={transactions}/>
