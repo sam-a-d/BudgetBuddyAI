@@ -142,7 +142,9 @@ public class TransactionService {
         }
 
         if(endDate != null && !endDate.isEmpty()){
-            predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("transactionTime"), LocalDate.parse(endDate)));
+            LocalDate endLocalDate = LocalDate.parse(endDate);
+            LocalDateTime endOfDay = endLocalDate.atTime(23, 59, 59); // Include the whole day
+            predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("transactionTime"), endOfDay));
         }
 
         if(minAmount != null){
