@@ -3,10 +3,10 @@ import Card from '../Card';
 import CardSmall from '../CardSmall';
 import TransactionSummary from './TransactionSummary';
 import axios from 'axios';
-import TransactionFilter from './TransactionFilter';
 import { TransacFilterUrlGenerator } from '../../functions/TransacFilterUrlGenerator';
 import Dropdown from '../microComponents/dropdown';
 import { FilterDurationProcessor } from '../../functions/FilterDurationProcessor';
+import Input from '../microComponents/input';
 
 class DashboardHome extends Component {
     constructor(props){
@@ -31,7 +31,9 @@ class DashboardHome extends Component {
         userId: 1,
         type: this.state.selectedType === "all" ? null : this.state.selectedType,
         startDate: this.state.startDate,
-        endDate: this.state.endDate
+        endDate: this.state.endDate,
+        minAmount: this.state.minAmount,
+        maxAmount: this.state.maxAmount
       });
       
       console.log(baseUrl);
@@ -116,6 +118,23 @@ class DashboardHome extends Component {
                   value={this.state.selectedDuration}
                   onChange={this.handleDurationChange}
                 />
+
+                <Input
+                  cssClass="col-xl-2 col-md-6"
+                  placeholder="Min Amount"
+                  value={this.state.minAmount}
+                  type='number'
+                  onChange={(e) => this.setState({ minAmount: e.target.value }, () => this.fetchTransactions())}
+                />
+
+                <Input
+                  cssClass="col-xl-2 col-md-6"
+                  placeholder="Max Amount"
+                  value={this.state.maxAmount}
+                  type='number'
+                  onChange={(e) => this.setState({ maxAmount: e.target.value }, () => this.fetchTransactions())}
+                />
+                
 
               </div>
             
