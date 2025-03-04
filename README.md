@@ -54,3 +54,9 @@ A full-stack web application for tracking personal finances, powered by **Spring
    ```bash
    git clone https://github.com/sam-a-d/BuggetBuddyAI
    cd BuggetBuddyAI
+
+## The Dashboard
+![image](https://github.com/user-attachments/assets/c5cd4762-b1f2-4a1b-9d26-198d29fc64f8)
+
+** This project is under development
+
